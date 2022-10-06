@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1><b>Todo</b></h1>
+<hr>
+{% for todo in todos %}
+  <ul>
+    <li>
+      {{ todo.author }} - {{ todo.title }}
+    </li>
+  </ul>
+{% empty %}
+  <p>작성된 글이 없습니다.</p>
+{% endfor %}
+{% endblock content %}
