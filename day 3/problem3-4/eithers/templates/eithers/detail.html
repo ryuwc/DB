@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1><b>DETAIL</b></h1>
+  <hr>
+  <h3><b>{{ question.title }}</b></h3>
+  <a href="{% url 'eithers:update' question.pk %}">UPDATE</a>
+  <form action="{% url 'eithers:delete' question.pk %}" method='POST'>
+    {% csrf_token %}
+    <input type="submit" value='DELETE'>
+  </form>
+  <p><b>Red Team</b></p>
+  <p><b>=> {{ question.issue_a }} => {{ count_a }}명 선택 ({{ per_a }}%)</b></p>
+  <br>
+  <br>
+  <p><b>Blue Team</b></p>
+  <p><b>=> {{ question.issue_b }} => {{ count_b }}명 선택 ({{ per_b }}%)</b></p>
+  <hr>
+  <a href="{% url 'eithers:index' %}">BACK</a>
+  <hr>
+  <h3><b>댓글 작성</b></h3>
+  <form action="{% url 'eithers:comments_create' question.pk %}" method='POST'>
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <input type="submit" value='작성'>
+  </form>
+  <hr>
+  <h3><b>댓글 목록</b></h3>
+  {% for comment in comments %}
+    {% if comment.pick == 1 %}
+      <p>Red - {{ comment.content }}</p>
+      <form action="{% url 'eithers:comments_delete' comment.pk %}" method='POST'>
+        {% csrf_token %}
+        <input type="submit" value="댓글삭제">
+      </form>
+    {% else %}
+      <p>Blue = {{ comment.content }}</p>
+      <form action="{% url 'eithers:comments_delete' comment.pk %}" method='POST'>
+        {% csrf_token %}
+        <input type="submit" value="댓글삭제">
+      </form>
+    {% endif %}
+  {% endfor %}
+
+{% endblock content %}
+
