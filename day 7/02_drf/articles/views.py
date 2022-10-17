@@ -1,4 +1,3 @@
-from django.urls import is_valid_path
 from articles.serializers import ArticleListSerializer, ArticleSerializer, CommentSerializer
 from .models import Article, Comment
 
@@ -72,9 +71,6 @@ def comment_detail(request, comment_pk):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
-
-
-
 
 
 @api_view(['POST'])
